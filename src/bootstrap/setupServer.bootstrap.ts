@@ -7,6 +7,10 @@ import cookieSession from 'cookie-session';
 import cors from 'cors';
 import 'express-async-errors';
 import { config } from '@configs/configEnvs';
+import { logger } from '@configs/configLogs';
+import Logger from 'bunyan';
+
+const log: Logger = logger.createLogger('server');
 
 export class ArtNetServer {
 	private app: Application;
@@ -18,6 +22,7 @@ export class ArtNetServer {
 	public start(): void {
 		this.securityMiddleware(this.app);
 		this.standardMiddleware(this.app);
+		this.startServer(this.app);
 	}
 
 	private securityMiddleware(app: Application): void {
@@ -47,7 +52,19 @@ export class ArtNetServer {
 		app.use(urlencoded({ extended: true, limit: '50mb' }));
 	}
 
-	private async startServer(app: Application): Promise<void> {}
+	private async startServer(app: Application): Promise<void> {
+		try {
+			const httpServer: http.Server = new http.Server(app);
+			this.startHttpServer(httpServer);
+		} catch (error) {
+			log.error(error);
+		}
+	}
 
-	private startHttpServer(app: Application): void {}
+	private startHttpServer(httpServer: http.Server): void {
+		log.info(`Server has started with process ${process.pid}`);
+		httpServer.listen(config.SERVER_PORT, () => {
+			log.info(`Server running at ${config.SERVER_PORT}`);
+		});
+	}
 }

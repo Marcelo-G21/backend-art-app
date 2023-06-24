@@ -1,4 +1,4 @@
-import { Application, json, urlencoded } from 'express';
+import { Application, json, urlencoded, Request, Response, NextFunction } from 'express';
 import http from 'http';
 import helmet from 'helmet';
 import hpp from 'hpp';
@@ -9,6 +9,9 @@ import 'express-async-errors';
 import { config } from '@configs/configEnvs';
 import { logger } from '@configs/configLogs';
 import Logger from 'bunyan';
+import { IErrorResponse } from '@helpers/errors/errorResponse.interface';
+import { CustomError } from '@helpers/errors/customError';
+import HTTP_STATUS from 'http-status-codes';
 
 const log: Logger = logger.createLogger('server');
 
@@ -22,6 +25,7 @@ export class ArtNetServer {
 	public start(): void {
 		this.securityMiddleware(this.app);
 		this.standardMiddleware(this.app);
+		this.globalErrorHandler(this.app);
 		this.startServer(this.app);
 	}
 
@@ -59,6 +63,20 @@ export class ArtNetServer {
 		} catch (error) {
 			log.error(error);
 		}
+	}
+
+	private globalErrorHandler(app: Application): void {
+		app.all('*', (req: Request, res: Response) => {
+			res.status(HTTP_STATUS.NOT_FOUND).json({ message: `${req.originalUrl} not found` });
+		});
+
+		app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
+			log.error(error);
+			if (error instanceof CustomError) {
+				return res.status(error.statusCode).json(error.serializeErrors());
+			}
+			next();
+		});
 	}
 
 	private startHttpServer(httpServer: http.Server): void {

@@ -1,7 +1,7 @@
 {
-  "name": "backend-art-app",
+  "name": "backend-pets-app",
   "version": "1.0.0",
-  "description": "Backend for project Art App with Node and Express",
+  "description": "Backend for project Pets App with Node and Express",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon -r tsconfig-paths/register src/app.ts | ./node_modules/.bin/bunyan",

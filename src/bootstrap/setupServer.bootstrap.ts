@@ -56,15 +56,6 @@ export class ArtNetServer {
 		app.use(urlencoded({ extended: true, limit: '50mb' }));
 	}
 
-	private async startServer(app: Application): Promise<void> {
-		try {
-			const httpServer: http.Server = new http.Server(app);
-			this.startHttpServer(httpServer);
-		} catch (error) {
-			log.error(error);
-		}
-	}
-
 	private globalErrorHandler(app: Application): void {
 		app.all('*', (req: Request, res: Response) => {
 			res.status(HTTP_STATUS.NOT_FOUND).json({ message: `${req.originalUrl} not found` });
@@ -77,6 +68,15 @@ export class ArtNetServer {
 			}
 			next();
 		});
+	}
+
+	private async startServer(app: Application): Promise<void> {
+		try {
+			const httpServer: http.Server = new http.Server(app);
+			this.startHttpServer(httpServer);
+		} catch (error) {
+			log.error(error);
+		}
 	}
 
 	private startHttpServer(httpServer: http.Server): void {

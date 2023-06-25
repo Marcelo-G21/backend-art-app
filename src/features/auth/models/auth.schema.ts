@@ -9,7 +9,6 @@ const authSchema: Schema = new Schema(
     uId: { type: 'String' },
     email: { type: 'String' },
     password: { type: 'String' },
-    avatarColor: { type: 'String' },
     createdAt: { type: Date, default: Date.now() }
   },
   {

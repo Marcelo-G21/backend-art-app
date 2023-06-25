@@ -1,6 +1,6 @@
 import { IAuthDocument } from './authDocument.interface';
-import { IArtistDocument } from '@user/interfaces/artistDocument.interface';
+import { IUserDocument } from '@root/features/user/interfaces/userDocument.interface';
 
 export interface IAuthJob {
-  value?: string | IAuthDocument | IArtistDocument;
+	value?: string | IAuthDocument | IUserDocument;
 }

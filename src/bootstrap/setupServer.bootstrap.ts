@@ -15,6 +15,7 @@ import { config } from '@configs/configEnvs';
 import { logger } from '@configs/configLogs';
 import { IErrorResponse } from '@helpers/errors/errorResponse.interface';
 import { CustomError } from '@helpers/errors/customError';
+import applicationRoutes from '@interfaces/http/routes';
 
 const log: Logger = logger.createLogger('server');
 
@@ -28,6 +29,7 @@ export class ArtNetServer {
 	public start(): void {
 		this.securityMiddleware(this.app);
 		this.standardMiddleware(this.app);
+		this.routesMiddleware(this.app);
 		this.globalErrorHandler(this.app);
 		this.startServer(this.app);
 	}
@@ -59,6 +61,10 @@ export class ArtNetServer {
 		app.use(json({ limit: '50mb ' }));
 		app.use(urlencoded({ extended: true, limit: '50mb' }));
 	}
+
+	private routesMiddleware(app: Application): void {
+    applicationRoutes(app);
+  }
 
 	private globalErrorHandler(app: Application): void {
 		app.all('*', (req: Request, res: Response) => {

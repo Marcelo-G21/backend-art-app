@@ -60,7 +60,9 @@ export class UserCache extends BaseCache {
 
       const response: IUserDocument = (await this.client.HGETALL(`users:${userId}`)) as unknown as IUserDocument;
       response.createdAt = new Date(Generators.parseJson(`${response.createdAt}`));
-
+			response.firstName = Generators.parseJson(`${response.firstName}`);
+			response.lastName = Generators.parseJson(`${response.lastName}`);
+			response.petsOwned = Generators.parseJson(`${response.petsOwned}`);
       response.profilePicture = Generators.parseJson(`${response.profilePicture}`);
 
       return response;

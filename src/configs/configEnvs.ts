@@ -17,6 +17,7 @@ class Config {
 	public CLOUD_DOMAIN: string | undefined;
 	public SALT_ROUND: string | undefined;
 	public REDIS_HOST: string | undefined;
+	public BASE_PATH: string | undefined;
 
 	constructor() {
 		this.DATABASE_URL = process.env.DATABASE_URL;
@@ -32,6 +33,7 @@ class Config {
 		this.CLOUD_DOMAIN = process.env.CLOUD_DOMAIN;
 		this.SALT_ROUND = process.env.SALT_ROUND;
 		this.REDIS_HOST = process.env.REDIS_HOST;
+		this.BASE_PATH = process.env.BASE_PATH;
 	}
 
 	public validateConfig(): void {

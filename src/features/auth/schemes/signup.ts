@@ -7,7 +7,7 @@ const signupSchema: ObjectSchema = Joi.object().keys({
 		'string.max': 'Invalid username',
 		'string.empty': 'Username is a required field'
 	}),
-	password: Joi.string().required().min(4).max(12).messages({
+	password: Joi.string().required().min(4).max(10).messages({
 		'string.base': 'Password must be a string',
 		'string.min': 'Invalid password, too short',
 		'string.max': 'Invalid password, too long',
@@ -18,6 +18,9 @@ const signupSchema: ObjectSchema = Joi.object().keys({
 		'string.email': 'Email must be valid',
 		'string.empty': 'Email is a required field'
 	}),
+	avatarImage: Joi.string().required().messages({
+    'any.required': 'Avatar image is required'
+  })
 });
 
 export { signupSchema };

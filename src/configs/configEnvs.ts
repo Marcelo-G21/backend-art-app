@@ -16,6 +16,7 @@ class Config {
 	public CLOUD_API_SECRET: string | undefined;
 	public CLOUD_DOMAIN: string | undefined;
 	public SALT_ROUND: string | undefined;
+	public REDIS_HOST: string | undefined;
 
 	constructor() {
 		this.DATABASE_URL = process.env.DATABASE_URL;
@@ -30,6 +31,7 @@ class Config {
 		this.CLOUD_API_SECRET = process.env.CLOUD_API_SECRET;
 		this.CLOUD_DOMAIN = process.env.CLOUD_DOMAIN;
 		this.SALT_ROUND = process.env.SALT_ROUND;
+		this.REDIS_HOST = process.env.REDIS_HOST;
 	}
 
 	public validateConfig(): void {

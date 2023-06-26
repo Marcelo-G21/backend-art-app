@@ -1,17 +1,20 @@
 import { Application, json, urlencoded, Request, Response, NextFunction } from 'express';
 import http from 'http';
+import cors from 'cors';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import compression from 'compression';
 import cookieSession from 'cookie-session';
-import cors from 'cors';
+import Logger from 'bunyan';
 import 'express-async-errors';
+import HTTP_STATUS from 'http-status-codes';
+import { Server } from 'socket.io';
+import { createClient } from 'redis';
+import { createAdapter } from '@socket.io/redis-adapter';
 import { config } from '@configs/configEnvs';
 import { logger } from '@configs/configLogs';
-import Logger from 'bunyan';
 import { IErrorResponse } from '@helpers/errors/errorResponse.interface';
 import { CustomError } from '@helpers/errors/customError';
-import HTTP_STATUS from 'http-status-codes';
 
 const log: Logger = logger.createLogger('server');
 
@@ -30,6 +33,7 @@ export class ArtNetServer {
 	}
 
 	private securityMiddleware(app: Application): void {
+		//Design Pattern Synchronizer Token Pattern
 		app.use(
 			cookieSession({
 				name: 'session',
@@ -73,7 +77,9 @@ export class ArtNetServer {
 	private async startServer(app: Application): Promise<void> {
 		try {
 			const httpServer: http.Server = new http.Server(app);
+			const socketIO: Server = await this.createSocketIO(httpServer);
 			this.startHttpServer(httpServer);
+			this.socketIOConnections(socketIO);
 		} catch (error) {
 			log.error(error);
 		}
@@ -85,4 +91,23 @@ export class ArtNetServer {
 			log.info(`Server running at ${config.SERVER_PORT}`);
 		});
 	}
+
+	private async createSocketIO(httpServer: http.Server): Promise<Server> {
+    const io: Server = new Server(httpServer, {
+      cors: {
+        origin: config.CLIENT_URL,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+      }
+    });
+    const pubClient = createClient({ url: config.REDIS_HOST });
+    const subClient = pubClient.duplicate();
+    await Promise.all([pubClient.connect(), subClient.connect()]);
+    io.adapter(createAdapter(pubClient, subClient));
+    return io;
+  }
+
+  private socketIOConnections(io: Server): void {
+    console.log(io);
+    log.info('SocketIO Connections Ok.');
+  }
 }

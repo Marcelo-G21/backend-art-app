@@ -4,6 +4,8 @@ import { config } from '@configs/configEnvs';
 import { NotAuthorizedError } from '@helpers/errors/notAuthorizedError';
 import { AuthPayload } from '@auth/interfaces/authPayload.interface';
 
+//Design Pattern Chain of Responsability
+
 export class AuthMiddleware {
 	public verifyUser(req: Request, _res: Response, next: NextFunction): void {
 		if (!req.session?.jwt) {

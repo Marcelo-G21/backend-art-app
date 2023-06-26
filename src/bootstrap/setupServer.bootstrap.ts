@@ -59,12 +59,12 @@ export class PetAppServer {
 	private standardMiddleware(app: Application): void {
 		app.use(compression());
 		app.use(json({ limit: '100mb ' }));
-		app.use(urlencoded({ extended: true, limit: '100mb'}));
+		app.use(urlencoded({ extended: true, limit: '100mb' }));
 	}
 
 	private routesMiddleware(app: Application): void {
-    applicationRoutes(app);
-  }
+		applicationRoutes(app);
+	}
 
 	private globalErrorHandler(app: Application): void {
 		app.all('*', (req: Request, res: Response) => {
@@ -99,21 +99,21 @@ export class PetAppServer {
 	}
 
 	private async createSocketIO(httpServer: http.Server): Promise<Server> {
-    const io: Server = new Server(httpServer, {
-      cors: {
-        origin: config.CLIENT_URL,
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
-      }
-    });
-    const pubClient = createClient({ url: config.REDIS_HOST });
-    const subClient = pubClient.duplicate();
-    await Promise.all([pubClient.connect(), subClient.connect()]);
-    io.adapter(createAdapter(pubClient, subClient));
-    return io;
-  }
+		const io: Server = new Server(httpServer, {
+			cors: {
+				origin: config.CLIENT_URL,
+				methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+			}
+		});
+		const pubClient = createClient({ url: config.REDIS_HOST });
+		const subClient = pubClient.duplicate();
+		await Promise.all([pubClient.connect(), subClient.connect()]);
+		io.adapter(createAdapter(pubClient, subClient));
+		return io;
+	}
 
-  private socketIOConnections(io: Server): void {
-    console.log(io);
-    log.info('SocketIO Connections Ok.');
-  }
+	private socketIOConnections(io: Server): void {
+		console.log(io);
+		log.info('SocketIO Connections Ok.');
+	}
 }

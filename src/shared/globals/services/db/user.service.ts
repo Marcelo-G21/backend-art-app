@@ -2,6 +2,7 @@ import { IUserDocument } from '@user/interfaces/userDocument.interface';
 import { UserModel } from '@user/models/user.schema';
 import mongoose from 'mongoose';
 
+//Principio SOLID Open/Close
 class UserService {
 	public async addUserData(data: IUserDocument): Promise<void> {
 		await UserModel.create(data);

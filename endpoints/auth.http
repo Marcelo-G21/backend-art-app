@@ -10,5 +10,22 @@ withCredentials: true
 {
   "username": "poroto",
   "password": "santiago",
-  "email": "poroto@gmail.com",
+  "email": "poroto@gmail.com"
 }
+
+###
+POST {{baseUrl}}/{{urlPath}}/signin
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "username": "poroto",
+  "password": "santiago"
+}
+
+###
+GET {{baseUrl}}/{{urlPath}}/signout
+Content-Type: application/json
+Accept: application/json
+withCredentials: true

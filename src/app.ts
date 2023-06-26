@@ -1,6 +1,6 @@
 import express, { Express } from 'express';
 import databaseConnection from '@bootstrap/setupDatabase.bootstrap';
-import { ArtNetServer } from '@bootstrap/setupServer.bootstrap';
+import { PetAppServer } from '@bootstrap/setupServer.bootstrap';
 import { config } from '@configs/configEnvs';
 
 class Application {
@@ -8,7 +8,7 @@ class Application {
 		this.loadConfig();
 		databaseConnection();
 		const app: Express = express();
-		const server: ArtNetServer = new ArtNetServer(app);
+		const server: PetAppServer = new PetAppServer(app);
 		server.start();
 	}
 

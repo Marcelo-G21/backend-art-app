@@ -19,7 +19,7 @@ import applicationRoutes from '@interfaces/http/routes';
 
 const log: Logger = logger.createLogger('server');
 
-export class ArtNetServer {
+export class PetAppServer {
 	private app: Application;
 
 	constructor(app: Application) {
@@ -58,8 +58,8 @@ export class ArtNetServer {
 
 	private standardMiddleware(app: Application): void {
 		app.use(compression());
-		app.use(json({ limit: '50mb ' }));
-		app.use(urlencoded({ extended: true, limit: '50mb' }));
+		app.use(json({ limit: '100mb ' }));
+		app.use(urlencoded({ extended: true, limit: '100mb'}));
 	}
 
 	private routesMiddleware(app: Application): void {

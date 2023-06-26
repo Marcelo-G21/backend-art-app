@@ -1,4 +1,3 @@
-import mongoose, { Document } from 'mongoose';
 import { ObjectId } from 'mongodb';
 
 export interface IUserDocument extends Document {
@@ -8,8 +7,10 @@ export interface IUserDocument extends Document {
 	email?: string;
 	password?: string;
 	uId?: string;
-	profilePicture: string;
-	petsCount?: number;
+	firstName: string;
+	lastName: string;
+	profilePicture?: string;
+	petsOwned?: number;
 	passwordResetToken?: string;
 	passwordResetExpires?: number | string;
 	createdAt?: Date;

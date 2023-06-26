@@ -23,8 +23,10 @@ class UserService {
 			username: '$authId.username',
 			uId: '$authId.uId',
 			email: '$authId.email',
+			firstName: '$firstName',
+			lastName: '$lastName',
 			createdAt: '$authId.createdAt',
-			petsCount: 1,
+			petsOwned: 1,
 			profilePicture: 1
 		};
 	}

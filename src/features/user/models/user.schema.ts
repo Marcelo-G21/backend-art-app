@@ -4,7 +4,9 @@ import mongoose, { model, Model, Schema } from 'mongoose';
 const userSchema: Schema = new Schema({
 	authId: { type: mongoose.Schema.Types.ObjectId, ref: 'Auth' },
 	profilePicture: { type: String, default: '' },
-	petsCount: { type: Number, default: 0 },
+	firstName: { type: String, default: '' },
+	lastName: { type: String, default: '' },
+	petsOwned: { type: Number, default: 0 },
 	passwordResetToken: { type: String, default: '' },
 	passwordResetExpires: { type: Number }
 });

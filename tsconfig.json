@@ -31,6 +31,7 @@
 			"@decorators/*": ["src/shared/globals/decorators/*"],
 			"@helpers/*": ["src/shared/globals/helpers/*"],
 			"@services/*": ["src/shared/globals/services/*"],
+			"@workers/*": ["src/shared/globals/workers/*"],
 			"@root/*": ["src/*"]
 		}
 	},

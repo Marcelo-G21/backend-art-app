@@ -1,5 +1,5 @@
 {
-  "name": "backend-pets-app",
+  "name": "backend-pet-owners-app",
   "version": "1.0.0",
   "description": "Backend for project Pet Owners App with Node and Express",
   "main": "app.js",
